@@ -19,7 +19,7 @@ jobs:
           node-version: 18
 
       - run: npm install
-      - run: npm run build
+      - run: npm run build:production
 
       - name: Deploy to Vercel
         uses: amondnet/vercel-action@v25
