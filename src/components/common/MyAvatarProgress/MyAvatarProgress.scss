@@ -1,0 +1,47 @@
+.ap-dp {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border-radius: 100%;
+
+  .ap-progress {
+    position: absolute;
+    border-radius: 100%;
+    transform: rotate(0deg);
+  }
+
+  .ap-outline {
+    position: absolute;
+    border-radius: 100%;
+    cursor: pointer;
+
+    .ap-avatar {
+      border-radius: 50%;
+    }
+  }
+
+  .ap-completed {
+    width: max-content;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    padding: 2px 14px;
+    border-radius: 18px;
+    background: linear-gradient(0deg, $primary-4 0%, rgb(174 255 252) 120.94%);
+    box-shadow:
+      4px 4px 4px 0 #a8fffa inset,
+      -2px -3px 4px 0 $primary-4 inset;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $white-1;
+    text-align: center;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 130%;
+    letter-spacing: -0.28px;
+    height: 17px;
+    bottom: 0;
+  }
+}

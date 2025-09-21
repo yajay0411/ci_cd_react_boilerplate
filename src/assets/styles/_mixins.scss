@@ -1,0 +1,19 @@
+$desktop: 768px;
+
+// Mixin for flexbox centering
+@mixin flex($direction: row, $justify-content: center, $align-items: center, $gap: 0) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify-content;
+  align-items: $align-items;
+  gap: $gap;
+}
+
+// Mixin for responsive font size
+@mixin responsive-font($mobileSize, $desktopSize) {
+  font-size: $mobileSize;
+
+  @media (min-width: $desktop) {
+    font-size: $desktopSize;
+  }
+}

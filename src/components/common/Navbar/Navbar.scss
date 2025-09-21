@@ -1,0 +1,15 @@
+.navbar-wrapper {
+  background-color: #fff;
+  box-shadow: 0 3px 12px rgb(0 0 0 / 8%);
+  padding: 8px 16px;
+  z-index: 99;
+
+  .navbar-mwc {
+    width: 100%;
+    max-width: var(--navbar-mwc-max-width);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: auto;
+  }
+}
