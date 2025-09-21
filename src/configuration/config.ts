@@ -3,7 +3,7 @@ import * as yup from 'yup';
 // 1️⃣ Define schema
 const envSchema = yup.object({
   NODE_ENV: yup.string().oneOf(['development', 'production', 'test']).required(),
-  API_BASE_URL: yup.string().url().required(),
+  API_BASE_URL: yup.string().url().optional(),
 });
 
 // 2️⃣ Validate environment
