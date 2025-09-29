@@ -14,7 +14,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: "${env.BRANCH_NAME}", url: 'https://github.com/yajay0411/ci_cd_react_boilerplate'
+                git branch: "main", url: 'https://github.com/yajay0411/ci_cd_react_boilerplate'
             }
         }
 
