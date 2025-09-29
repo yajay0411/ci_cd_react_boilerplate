@@ -22,7 +22,7 @@ pipeline {
         stage('Install') {
             steps {
                 // Use legacy-peer-deps to avoid memory spikes
-                sh 'npm ci'
+                sh 'npm ci --legacy-peer-deps'
             }
         }
 
