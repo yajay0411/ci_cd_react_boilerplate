@@ -22,7 +22,7 @@ pipeline {
         stage('Install') {
             steps {
                 // Use legacy-peer-deps to avoid memory spikes
-                sh 'npm ci --legacy-peer-deps'
+                sh 'npm ci'
             }
         }
 
@@ -47,7 +47,7 @@ pipeline {
                     export VERCEL_ORG=$VERCEL_SCOPE
 
                     # Deploy
-                    npx vercel --prod --confirm --project=$VERCEL_PROJECT
+                    npx vercel --prod --confirm
                 '''
             }
         }
