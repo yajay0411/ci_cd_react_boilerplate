@@ -47,7 +47,7 @@ pipeline {
                     export VERCEL_ORG=$VERCEL_SCOPE
 
                     # Deploy
-                    npx vercel --prod --confirm --scope=$VERCEL_ORG --project=$VERCEL_PROJECT
+                    npx vercel --prod --confirm --project=$VERCEL_PROJECT
                 '''
             }
         }
