@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        nodejs "NodeJS_18" // Use stable LTS for CI memory stability
+        nodejs "NodeJS_22" // Use stable LTS for CI memory stability
     }
 
     environment {
