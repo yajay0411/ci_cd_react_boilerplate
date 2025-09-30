@@ -49,8 +49,7 @@ pipeline {
                       --token=$VERCEL_TOKEN \
                       --prod \
                       --yes \
-                      --scope=$VERCEL_ORG \
-                      --project=$VERCEL_PROJECT
+                      --scope=$VERCEL_ORG
                 '''
             }
         }
