@@ -6,20 +6,20 @@ pipeline {
     }
 
     environment {
-        VERCEL_TOKEN      = credentials('VERCEL_TOKEN')
+        VERCEL_TOKEN   = credentials('VERCEL_TOKEN')       // API token
+        VERCEL_PROJECT = credentials('VERCEL_PROJECT_ID')  // Project ID
+        VERCEL_ORG     = credentials('VERCEL_ORG_ID')      // Org/Team ID
     }
 
     stages {
         stage('Checkout') {
             steps {
-                // Multibranch safe: uses env.BRANCH_NAME automatically if this is a Multibranch Pipeline
                 checkout scm
             }
         }
 
         stage('Install') {
             steps {
-                // Use legacy-peer-deps to avoid memory spikes
                 sh 'npm ci --legacy-peer-deps'
             }
         }
@@ -39,11 +39,18 @@ pipeline {
         stage('Deploy to Vercel') {
             steps {
                 sh '''
-                    # Export secrets for safe CLI usage
+                    # Export Jenkins credentials into shell env
                     export VERCEL_TOKEN=$VERCEL_TOKEN
+                    export VERCEL_PROJECT_ID=$VERCEL_PROJECT
+                    export VERCEL_ORG_ID=$VERCEL_ORG
 
-                    # Deploy
-                    npx vercel --prod --yes
+                    # Authenticate & deploy (works with non-interactive CI)
+                    npx vercel deploy \
+                      --token=$VERCEL_TOKEN \
+                      --prod \
+                      --yes \
+                      --scope=$VERCEL_ORG \
+                      --project=$VERCEL_PROJECT
                 '''
             }
         }
