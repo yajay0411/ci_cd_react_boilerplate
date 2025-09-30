@@ -7,8 +7,6 @@ pipeline {
 
     environment {
         VERCEL_TOKEN      = credentials('VERCEL_TOKEN')
-        VERCEL_PROJECT    = credentials('VERCEL_PROJECT_ID')
-        VERCEL_SCOPE      = credentials('VERCEL_ORG_ID')
     }
 
     stages {
@@ -43,8 +41,6 @@ pipeline {
                 sh '''
                     # Export secrets for safe CLI usage
                     export VERCEL_TOKEN=$VERCEL_TOKEN
-                    export VERCEL_PROJECT=$VERCEL_PROJECT
-                    export VERCEL_ORG=$VERCEL_SCOPE
 
                     # Deploy
                     npx vercel --prod --yes
