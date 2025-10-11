@@ -1,16 +1,20 @@
-import React, { type ReactNode } from 'react'
-import { BrowserRouter } from 'react-router-dom'
+import React, { type ReactNode } from 'react';
+import { BrowserRouter } from 'react-router-dom';
+
+import { ErrorBoundary } from '@/core/ErrorBoundary/ErrorBoundary';
 
 interface IProviderProps {
-    children: ReactNode
+  children: ReactNode;
 }
 
-const Provider:React.FC<IProviderProps> = ({children}) => {
+const Provider: React.FC<IProviderProps> = ({ children }) => {
   return (
     <>
-      <BrowserRouter>{children}</BrowserRouter>
+      <ErrorBoundary>
+        <BrowserRouter>{children}</BrowserRouter>
+      </ErrorBoundary>
     </>
-  )
-}
+  );
+};
 
-export default Provider
+export default Provider;

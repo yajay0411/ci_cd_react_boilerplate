@@ -1,13 +1,14 @@
 import React, { Suspense, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
+
 import { CONFIG } from '@/configuration/config';
 
 // Lazy imports
+const NotFoundPage = lazy(() => import('@pages/NotFoundPage/NotFoundPage'));
+const HomePage = lazy(() => import('@pages/MyHomePage/MyHomePage'));
 
 const AllImages = lazy(() => import('@/components/dev/AllImages/AllImages'));
 const FormikPlayground = lazy(() => import('@/components/dev/Playground/FormikPlayground'));
-
-const NotFoundPage = lazy(() => import('@pages/NotFoundPage/NotFoundPage'));
 
 // ---- Route Config ----
 type AppRoute = {
@@ -18,8 +19,7 @@ type AppRoute = {
 };
 
 const routeConfig: AppRoute[] = [
-  { path: '/', element: <NotFoundPage /> },
-  
+  { path: '/', element: <HomePage /> },
   ...(CONFIG.NODE_ENV === 'development'
     ? [
         {
@@ -61,7 +61,7 @@ const renderRoutes = (routes: AppRoute[]) =>
 
 // ---- Component ----
 const AppRoutes: React.FC = () => (
-  <Suspense fallback={"Loading"}>
+  <Suspense fallback={'Loading'}>
     <Routes>{renderRoutes(routeConfig)}</Routes>
   </Suspense>
 );

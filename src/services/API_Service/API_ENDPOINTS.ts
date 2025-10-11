@@ -1,5 +1,1 @@
-export const API_ENDPOINTS = {
-  users: {
-    me: '/users/me',
-  },
-};
+export const API_ENDPOINTS = {};
