@@ -2,7 +2,18 @@ name: Manual Deploy to Vercel
 
 on:
   push:
+    branches:
+      - main
+      - dev
   workflow_dispatch:
+    inputs:
+      branch:
+        required: true
+        type: choice
+        default: main
+        options:
+          - main
+          - dev
 
 jobs:
   build:
