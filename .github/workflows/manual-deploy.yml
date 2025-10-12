@@ -14,8 +14,6 @@ jobs:
   setup:
     name: 🧩 Setup and Validate
     runs-on: ubuntu-latest
-    outputs:
-      cache-key: ${{ steps.cache-deps.outputs.cache-hit }}
     steps:
       - uses: actions/checkout@v4
 
@@ -23,14 +21,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-
-      - name: Cache node_modules
-        id: cache-deps
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: npm-${{ hashFiles('package-lock.json') }}
-          restore-keys: npm-
+          cache: 'npm'
 
       - name: Install Dependencies
         run: npm ci
@@ -38,11 +29,15 @@ jobs:
       - name: Run Lint + Type Check
         run: npm run validate
 
-      - name: Save Installed Modules
-        uses: actions/upload-artifact@v4
+      - name: Cache dependencies for later jobs
+        id: cache-deps
+        uses: actions/cache@v4
         with:
-          name: node_modules
-          path: node_modules/
+          path: |
+            ~/.npm
+            node_modules
+          key: deps-${{ hashFiles('package-lock.json') }}
+          restore-keys: deps-
 
   tests:
     name: 🧪 Unit + E2E Tests
@@ -56,21 +51,28 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
 
-      - name: Download Cached node_modules
-        uses: actions/download-artifact@v4
+      - name: Restore Cached Dependencies
+        uses: actions/cache@v4
         with:
-          name: node_modules
-          path: node_modules/
+          path: |
+            ~/.npm
+            node_modules
+          key: deps-${{ hashFiles('package-lock.json') }}
+          restore-keys: deps-
 
-      - name: Prepare for Playwright (only if e2e)
+      - name: Ensure vitest & playwright binaries exist
+        run: npx vitest --version || echo "vitest not found"
+
+      - name: Prepare Playwright (only if e2e)
         if: matrix.test-type == 'e2e'
         run: npx playwright install --with-deps
 
       - name: Run Tests
         run: |
           if [ "${{ matrix.test-type }}" = "unit" ]; then
-            npm run test:coverage;
+            npx vitest run --coverage;
           else
             npm run test:e2e;
           fi
@@ -84,15 +86,21 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-      - uses: actions/download-artifact@v4
+          cache: 'npm'
+
+      - name: Restore Cached Dependencies
+        uses: actions/cache@v4
         with:
-          name: node_modules
-          path: node_modules/
+          path: |
+            ~/.npm
+            node_modules
+          key: deps-${{ hashFiles('package-lock.json') }}
+          restore-keys: deps-
 
       - name: Build Production
         run: npm run build:production
 
-      - name: Upload Build
+      - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
         with:
           name: build
