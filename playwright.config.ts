@@ -11,7 +11,7 @@ let baseURL = `http://localhost:${PORT}`;
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-  testDir: './tests',
+  testDir: './e2e',
   timeout: 30 * 1000,
   expect: {
     timeout: 5000,
