@@ -2,7 +2,6 @@ import { describe, it, expect } from 'vitest';
 
 import { NormalizeCssSize } from '../NormalizeCssSize';
 
-
 describe('NormalizeCssSize', () => {
   it('should return undefined when value is undefined', () => {
     expect(NormalizeCssSize(undefined)).toBeUndefined();

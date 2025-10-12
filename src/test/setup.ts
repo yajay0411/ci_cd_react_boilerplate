@@ -29,27 +29,27 @@ if (typeof window !== 'undefined') {
 // Mock localStorage and sessionStorage
 class MockStorage implements Storage {
   private store: Record<string, string> = {};
-  
+
   getItem(key: string): string | null {
     return this.store[key] || null;
   }
-  
+
   setItem(key: string, value: string): void {
     this.store[key] = String(value);
   }
-  
+
   removeItem(key: string): void {
     delete this.store[key];
   }
-  
+
   clear(): void {
     this.store = {};
   }
-  
+
   key(index: number): string | null {
     return Object.keys(this.store)[index] || null;
   }
-  
+
   get length(): number {
     return Object.keys(this.store).length;
   }
@@ -60,24 +60,26 @@ beforeAll(() => {
   // Mock localStorage and sessionStorage
   global.localStorage = new MockStorage() as unknown as Storage;
   global.sessionStorage = new MockStorage() as unknown as Storage;
-  
+
   // Mock document.cookie
   const originalCookieDesc = Object.getOwnPropertyDescriptor(Document.prototype, 'cookie') || {};
-  
+
   Object.defineProperty(document, 'cookie', {
-    get: function() {
-      return Object.entries(this._cookies || {})
-        .map(([key, value]) => `${key}=${value}`)
-        .join('; ') || '';
+    get: function () {
+      return (
+        Object.entries(this._cookies || {})
+          .map(([key, value]) => `${key}=${value}`)
+          .join('; ') || ''
+      );
     },
-    set: function(value: string) {
+    set: function (value: string) {
       if (!this._cookies) {
         this._cookies = {};
       }
-      
+
       const [keyValuePair] = value.split(';');
       const [key, val = ''] = keyValuePair.split('=').map(s => s.trim());
-      
+
       if (val === '') {
         delete this._cookies[key];
       } else {
@@ -86,7 +88,7 @@ beforeAll(() => {
     },
     configurable: true,
   });
-  
+
   // Store the original cookie descriptor for cleanup
   window.__originalCookieDesc = originalCookieDesc;
 });
@@ -110,16 +112,16 @@ afterAll(() => {
 afterEach(() => {
   cleanup();
   vi.clearAllMocks();
-  
+
   // Reset mocks
   if ('localStorage' in global) {
     global.localStorage.clear();
   }
-  
+
   if ('sessionStorage' in global) {
     global.sessionStorage.clear();
   }
-  
+
   // Reset document.cookie
   if (typeof document !== 'undefined') {
     document.cookie = '';

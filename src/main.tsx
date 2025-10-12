@@ -7,7 +7,7 @@ import App from '@/App';
 import Provider from './core/Provider/Provider';
 
 createRoot(document.getElementById('root')!).render(
-    <Provider>
-        <App />
-    </Provider>
+  <Provider>
+    <App />
+  </Provider>,
 );

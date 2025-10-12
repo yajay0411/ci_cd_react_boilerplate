@@ -10,6 +10,20 @@ export default tseslint.config(
   js.configs.recommended,
   prettier,
 
+  {
+    ignores: [
+      'node_modules',
+      'dist',
+      'build',
+      'coverage',
+      '*.config.js',
+      '*.config.cjs',
+      '*.config.ts',
+      'vite.config.ts',
+      'tsconfig.*.json',
+    ],
+  },
+
   // --- App / Source Files ---
   {
     files: ['src/**/*.{ts,tsx}'],

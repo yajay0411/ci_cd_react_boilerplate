@@ -11,10 +11,8 @@ const AllTheProviders = ({ children }: { children: ReactNode }) => {
   return <>{children}</>;
 };
 
-const customRender = (
-  ui: ReactElement,
-  options?: Omit<RenderOptions, 'wrapper'>
-) => render(ui, { wrapper: AllTheProviders, ...options });
+const customRender = (ui: ReactElement, options?: Omit<RenderOptions, 'wrapper'>) =>
+  render(ui, { wrapper: AllTheProviders, ...options });
 
 // Re-export everything from @testing-library/react
 // This allows you to import { render, screen } from '../../test-utils'
