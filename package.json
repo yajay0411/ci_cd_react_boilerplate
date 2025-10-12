@@ -4,8 +4,8 @@
   "type": "module",
   "scripts": {
     "dev": "cross-env vite",
-    "build:development": "cross-env npm run clean:build && vite build --mode development",
-    "build:production": "cross-env npm run clean:build && vite build --mode production",
+    "build:development": "cross-env vite build --mode development",
+    "build:production": "cross-env vite build --mode production",
     "preview": "cross-env vite preview --port 9090",
     "test": "vitest --mode test",
     "test:watch": "vitest --watch",
@@ -23,6 +23,7 @@
     "validate": "npm-run-all --continue-on-error --parallel lint:scss lint:ts type-check format",
     "validate:fix": "npm-run-all --continue-on-error --parallel lint:scss:fix lint:ts:fix format",
     "prepare": "husky install",
+    "clean:build": "npx rimraf build",
     "lint-staged": "lint-staged"
   },
   "lint-staged": {
